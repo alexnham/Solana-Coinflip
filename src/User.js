@@ -95,6 +95,7 @@ export function User() {
         }
     }
    
+   
     const initializeUser = async () => {
         if (program && publicKey) {
             try {

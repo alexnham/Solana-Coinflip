@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import heads from './images/heads.gif';
 import tails from './images/tails.gif';
 import original from "./images/default.gif";
@@ -13,7 +13,7 @@ export const Main = () => {
     const bs58 = require("bs58")
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
-    const { changeState, getCurrState, initialized, changeNewState,getAccount} = User()
+    const { changeState, getCurrState, initialized, changeNewState, changeStateT} = User()
     const [count, setCount] = useState(0);
     const [currState, setCurrState] = useState()
     let timeSecond = 5;
@@ -83,9 +83,8 @@ export const Main = () => {
                             lamports: 1_000_000_0,
                         })
                     );
-
-                 
                     const signature = await sendTransaction(transaction, connection);   
+
                     if ((or === 1 && choice === "heads") || (or === 0 && choice === "tails")) {
                         await changeState(1)
 
@@ -117,16 +116,16 @@ export const Main = () => {
         const privateKey = new Uint8Array(bs58.decode(process.env.REACT_APP_SENDER_PK));
 
         const account = web3.Keypair.fromSecretKey(privateKey);
-
         const transaction = new Transaction().add(
             SystemProgram.transfer({
                 fromPubkey: account.publicKey,
-                toPubkey: publicKey,//Keypair.generate().publicKey,
+                toPubkey: publicKey,
                 lamports: 2_000_000_0,
             })
         );
         await changeState(0)
         setCurrState(-1)
+        
         const signature = await web3.sendAndConfirmTransaction(
             connection,
             transaction,

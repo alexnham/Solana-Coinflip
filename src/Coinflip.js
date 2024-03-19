@@ -1,10 +1,9 @@
-import { useEffect } from "react";
 import { Main } from "./Main";
 import { User } from "./User";
 
 const Coinflip = () => {
-    const { count, imageSrc, visibility, choice, setChoice, onClick, decisionColor, decisionText, currState, claimWin, claimLoss } = Main()
-    const { initialized, initializeUser, changeState, getCurrState } = User()
+    const { count, imageSrc, visibility, choice, setChoice, onClick, decisionText, currState, claimWin, claimLoss } = Main()
+    const { initialized, initializeUser, } = User()
 
 
     return (
