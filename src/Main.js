@@ -45,11 +45,13 @@ export const Main = () => {
                     if (await getCurrState() === 1) {
                         setDecisionText(`${or === 1 ? "Heads" : "Tails"}`);
                         setCount(prevCount => prevCount + 1);
+                        setImageSrc(original);
                         setCurrState(-1)
                     } else {
                         setDecisionColor("red");
                         setDecisionText(`${or === 1 ? "Heads" : "Tails"}`);
                         setCount(0);
+                        setImageSrc(original);
                         setCurrState(-1)
 
 
