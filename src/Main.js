@@ -90,7 +90,7 @@ export const Main = () => {
 
                     }
                     else {
-                        await changeNewState(2)
+                        await changeState(2)
 
                     }
                  
