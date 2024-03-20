@@ -13,15 +13,14 @@ export const Main = () => {
     const bs58 = require("bs58")
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
-    const { changeState, getCurrState, initialized, changeNewState, changeStateT} = User()
+    const { changeState, getCurrState, initialized } = User()
     const [count, setCount] = useState(0);
     const [currState, setCurrState] = useState()
-    let timeSecond = 5;
     const [decisionText, setDecisionText] = useState("");
-    const [decisionColor, setDecisionColor] = useState("white");
     const [imageSrc, setImageSrc] = useState(original);
     const [choice, setChoice] = useState("");
     const [visibility, setVisibility] = useState(true)
+    let timeSecond = 5;
     let or = 0;
 
     useEffect(() => {
@@ -48,7 +47,6 @@ export const Main = () => {
                         setImageSrc(original);
                         setCurrState(-1)
                     } else {
-                        setDecisionColor("red");
                         setDecisionText(`${or === 1 ? "Heads" : "Tails"}`);
                         setCount(0);
                         setImageSrc(original);
@@ -72,11 +70,10 @@ export const Main = () => {
 
             if (choice === "") {
                 setVisibility(true);
-                setDecisionColor("white");
                 setDecisionText("Make Your Decision");
             } else {
                 or = random()
-                
+
                 try {
                     const transaction = new Transaction().add(
                         SystemProgram.transfer({
@@ -85,7 +82,7 @@ export const Main = () => {
                             lamports: 1_000_000_0,
                         })
                     );
-                    const signature = await sendTransaction(transaction, connection);   
+                    const signature = await sendTransaction(transaction, connection);
 
                     if ((or === 1 && choice === "heads") || (or === 0 && choice === "tails")) {
                         await changeState(1)
@@ -95,7 +92,7 @@ export const Main = () => {
                         await changeState(2)
 
                     }
-                 
+
                     if (signature) flip();
                 } catch (error) {
                     console.error("Error processing transaction:", error);
@@ -127,15 +124,18 @@ export const Main = () => {
         );
         await changeState(0)
         setCurrState(-1)
-        
         const signature = await web3.sendAndConfirmTransaction(
             connection,
             transaction,
             [account]);
     }
 
-    const random = () => {
-        return Math.random() > 0.5 ? 1 : 0;
-    };
-    return { count, imageSrc, visibility, choice, setChoice, onClick, decisionColor, decisionText, currState, claimWin, claimLoss }
+
+
+
+
+const random = () => {
+    return Math.random() > 0.5 ? 1 : 0;
+};
+return { count, imageSrc, visibility, choice, setChoice, onClick, decisionText, currState, claimWin, claimLoss }
 }
