@@ -34,33 +34,32 @@ export const Main = () => {
     const flip = () => {
         setDecisionText("")
         setVisibility(false);
-        if (choice !== "") {
-            const countdown = setInterval(async () => {
-                setImageSrc(or === 1 ? heads : tails);
-                setDecisionText("");
-                timeSecond--;
-                if (timeSecond === 0) {
-                    clearInterval(countdown)
-                    if (await getCurrState() === 1) {
-                        setDecisionText(`${or === 1 ? "Heads" : "Tails"}`);
-                        setCount(prevCount => prevCount + 1);
-                        setImageSrc(original);
-                        setCurrState(-1)
-                    } else {
-                        setDecisionText(`${or === 1 ? "Heads" : "Tails"}`);
-                        setCount(0);
-                        setImageSrc(original);
-                        setCurrState(-1)
+        setImageSrc(or === 1 ? heads : tails);
+        const countdown = setInterval(async () => {
+            setDecisionText("");
+            timeSecond--;
+            if (timeSecond === 0) {
+                clearInterval(countdown)
+                if (await getCurrState() === 1) {
+                    setDecisionText(`${or === 1 ? "Heads" : "Tails"}`);
+                    setCount(prevCount => prevCount + 1);
+                    setImageSrc(original);
+                    setCurrState(-1)
+                } else {
+                    setDecisionText(`${or === 1 ? "Heads" : "Tails"}`);
+                    setCount(0);
+                    setImageSrc(original);
+                    setCurrState(-1)
 
 
 
-                    }
-                    setChoice("");
-
-                    setVisibility(true);
                 }
-            }, 1000);
-        }
+                setChoice("");
+
+                setVisibility(true);
+            }
+        }, 1000);
+
 
     };
 
@@ -134,8 +133,8 @@ export const Main = () => {
 
 
 
-const random = () => {
-    return Math.random() > 0.5 ? 1 : 0;
-};
-return { count, imageSrc, visibility, choice, setChoice, onClick, decisionText, currState, claimWin, claimLoss }
+    const random = () => {
+        return Math.random() > 0.5 ? 1 : 0;
+    };
+    return { count, imageSrc, visibility, choice, setChoice, onClick, decisionText, currState, claimWin, claimLoss }
 }
